@@ -19,7 +19,7 @@ export default function Header(props: Props) {
     <div className='w-full h-fit flex justify-between items-center mb-6'>
       <div className='relative pl-2.5'>
         <div className='h-[calc(100%-10px)] w-1 rounded-lg bg-primary-light absolute top-1/2 -translate-y-1/2 left-0' />
-        <p className='text-lg text-neutral-dark font-medium'>Today</p>
+        <p className='text-lg text-neutral-dark font-medium'>Weekly</p>
       </div>
       <div className='flex gap-4 items-center'>
         <div className='h-10 px-4 bg-white shadow-[0_1.5px_0px_0px_rgba(217,217,217,1)] flex items-center rounded-full gap-2'>

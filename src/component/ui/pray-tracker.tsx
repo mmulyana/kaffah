@@ -15,8 +15,8 @@ export type PrayTrackerProps = {
 
 export default function PrayTracker(props: PrayTrackerProps) {
   return (
-    <div className='w-full h-fit bg-white px-6 pt-4 pb-5 border border-[#F0F0F0] rounded-lg'>
-      <p>{props.name}</p>
+    <div className='w-full h-fit bg-white px-6 pt-4 pb-5 border-[1.5px] border-[#F0F0F0] rounded-lg'>
+      <p className='text-neutral-dark font-medium'>{props.name}</p>
       <div className='flex justify-between items-center mt-3'>
         {props.data.map((item) => (
           <PrayDate
