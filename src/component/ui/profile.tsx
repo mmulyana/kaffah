@@ -4,7 +4,7 @@ import { useUser } from '@clerk/nextjs'
 import IconImagePlaceholder from '../icon/icon-image-placeholder'
 import Image from 'next/image'
 
-export default function UserProfile() {
+export default function Profile() {
   const { isLoaded, user } = useUser()
 
   if (!isLoaded) return <UserLoading />

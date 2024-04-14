@@ -1,4 +1,4 @@
-import Sidebar from '@/component/layout/sidebar'
+import Sidebar from '@/component/ui/sidebar'
 
 export default function Layout({ children }: React.PropsWithChildren) {
   return (
