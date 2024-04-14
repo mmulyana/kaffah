@@ -12,9 +12,9 @@ export default function IconCheck({ stroke = 'white', ...props }: IconProps) {
       <path
         d='M20 6L9 17L4 12'
         stroke={stroke}
-        stroke-width='2.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='2.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   )
