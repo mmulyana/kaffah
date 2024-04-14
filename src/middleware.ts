@@ -8,7 +8,7 @@ export default authMiddleware({
     '/login',
     '/demo/today',
     '/demo/analytic',
-    '/demo/settting',
+    '/demo/setting',
   ],
 })
 
