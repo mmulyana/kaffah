@@ -6,7 +6,14 @@ export default function Page() {
   return (
     <section className='h-fit lg:h-screen w-full flex flex-col-reverse md:grid grid-cols-2'>
       <div className='w-full h-full flex items-center justify-center'>
-        <SignUp />
+        <SignUp
+          appearance={{
+            layout: {
+              socialButtonsPlacement: 'bottom',
+              socialButtonsVariant: 'iconButton',
+            },
+          }}
+        />
       </div>
       <div className='p-2 lg:p-4'>
         <div className='w-full h-[180px] md:h-full bg-blue-600 rounded-lg lg:rounded-3xl relative overflow-hidden'>
