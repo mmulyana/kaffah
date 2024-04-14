@@ -8,6 +8,7 @@ export type PrayTrackerProps = {
     date: string
     day: string
   }[]
+  onClick?: (...param: any) => void
 }
 
 export default function PrayTracker(props: PrayTrackerProps) {
@@ -16,7 +17,12 @@ export default function PrayTracker(props: PrayTrackerProps) {
       <p>{props.name}</p>
       <div className='flex justify-between items-center mt-3'>
         {props.data.map((item) => (
-          <PrayDate {...item} key={item.id} />
+          <PrayDate
+            {...item}
+            onClick={props.onClick}
+            name={props.name}
+            key={item.id}
+          />
         ))}
       </div>
     </div>
@@ -24,9 +30,12 @@ export default function PrayTracker(props: PrayTrackerProps) {
 }
 
 type PrayDateProps = {
+  name: string
   day: string
   isDone: boolean
   date: string
+  id: string
+  onClick?: (...param: any) => void
 }
 
 function PrayDate(props: PrayDateProps) {
@@ -39,21 +48,30 @@ function PrayDate(props: PrayDateProps) {
 }
 
 type checkPrayProps = {
+  name: string
+  id: string
   isDone: boolean
   date: string
+  onClick?: (...param: any) => void
 }
 
 function CheckPray(props: checkPrayProps) {
   if (!props.isDone) {
     return (
-      <div className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'>
+      <div
+        onClick={() => props.onClick?.(props.name, props.id)}
+        className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'
+      >
         {props.date}
       </div>
     )
   }
 
   return (
-    <div className='h-10 w-10 rounded-full flex items-center justify-center bg-primary-light cursor-pointer'>
+    <div
+      onClick={() => props.onClick?.(props.name, props.id)}
+      className='h-10 w-10 rounded-full flex items-center justify-center bg-primary-light cursor-pointer'
+    >
       <IconCheck />
     </div>
   )

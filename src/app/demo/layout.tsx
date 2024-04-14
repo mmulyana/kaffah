@@ -5,7 +5,7 @@ export default function LayoutDemo({ children }: React.PropsWithChildren) {
     <>
       <Sidebar isDemo />
       <div className='px-4'>
-        <div className='pt-5'>{children}</div>
+        <div className='pt-5 max-w-[560px] mx-auto'>{children}</div>
       </div>
     </>
   )
