@@ -9,6 +9,33 @@ export function getCurrentWeekNumber(): number {
   return weekNumber
 }
 
+export function getFirstDay(weekNumber: number): string {
+  const startDateOfYear = new Date(new Date().getFullYear(), 0, 1)
+  const firstDayOfYear = startDateOfYear.getDay()
+  const daysToAdd = (weekNumber - 1) * 7 - firstDayOfYear + 1
+  const startDateOfWeek = new Date(startDateOfYear)
+  startDateOfWeek.setDate(startDateOfWeek.getDate() + daysToAdd)
+
+  const date = startDateOfWeek.getDate()
+  const monthIndex = startDateOfWeek.getMonth()
+  const month = MONTHS[monthIndex]
+
+  return `${date} ${month}`
+}
+
+export function getLastDay(weekNumber: number): string {
+  const startDateOfYear = new Date(new Date().getFullYear(), 0, 1)
+  const firstDayOfYear = startDateOfYear.getDay()
+  const daysToAdd = (weekNumber - 1) * 7 - firstDayOfYear + 7
+  const endDateOfWeek = new Date(startDateOfYear)
+  endDateOfWeek.setDate(endDateOfWeek.getDate() + daysToAdd)
+
+  const date = endDateOfWeek.getDate()
+  const monthIndex = endDateOfWeek.getMonth()
+  const month = MONTHS[monthIndex]
+
+  return `${date} ${month}`
+}
 
 export function generateWeekData(weekNumber: number) {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -23,9 +50,33 @@ export function generateWeekData(weekNumber: number) {
   return [0, 1, 2, 3, 4, 5, 6].map((_, i) => {
     const dayIndex = (todayDay + i) % 7
     const day = daysOfWeek[dayIndex]
-    const date = firstDayOfWeek.getDate() + i
-    const isDone = Math.random() < 0.5
+    let date = firstDayOfWeek.getDate() + i
+    let month = firstDayOfWeek.getMonth() + 1
+    const year = firstDayOfWeek.getFullYear()
+    const isDone = false
     const id = day.toLowerCase()
-    return { date: date.toString(), day, isDone, id };
+
+    const daysInMonth = new Date(year, month, 0).getDate()
+    if (date > daysInMonth) {
+      date -= daysInMonth
+      month++
+    }
+
+    return { date: date.toString(), day, isDone, id }
   })
 }
+
+const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
