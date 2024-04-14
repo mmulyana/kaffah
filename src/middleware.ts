@@ -6,7 +6,7 @@ export default authMiddleware({
     '/demo',
     '/register',
     '/login',
-    '/demo/today',
+    '/demo/weekly',
     '/demo/analytic',
     '/demo/setting',
   ],
