@@ -1,13 +1,15 @@
+import { useEffect, useState } from 'react'
 import IconCheck from '../icon/icon-check'
 
+type PrayData = {
+  id: string
+  isDone: boolean
+  date: string
+  day: string
+}
 export type PrayTrackerProps = {
   name: string
-  data: {
-    id: string
-    isDone: boolean
-    date: string
-    day: string
-  }[]
+  data: PrayData[]
   onClick?: (...param: any) => void
 }
 
@@ -29,12 +31,8 @@ export default function PrayTracker(props: PrayTrackerProps) {
   )
 }
 
-type PrayDateProps = {
+type PrayDateProps = PrayData & {
   name: string
-  day: string
-  isDone: boolean
-  date: string
-  id: string
   onClick?: (...param: any) => void
 }
 
@@ -47,22 +45,32 @@ function PrayDate(props: PrayDateProps) {
   )
 }
 
-type checkPrayProps = {
+type checkPrayProps = Omit<PrayData, 'day'> & {
   name: string
-  id: string
-  isDone: boolean
-  date: string
   onClick?: (...param: any) => void
 }
 
 function CheckPray(props: checkPrayProps) {
-  if (!props.isDone) {
+  const [isClient, setIsClient] = useState(false)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!!isClient) return <CheckPrayItem {...props} />
+
+  return (
+    <div className='h-10 w-10 rounded-full flex items-center justify-center bg-neutral-light animate-pulse'></div>
+  )
+}
+
+function CheckPrayItem(props: checkPrayProps) {
+  if (!!props.isDone) {
     return (
       <div
         onClick={() => props.onClick?.(props.name, props.id)}
-        className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'
+        className='h-10 w-10 rounded-full flex items-center justify-center bg-primary-light cursor-pointer'
       >
-        {props.date}
+        <IconCheck />
       </div>
     )
   }
@@ -70,9 +78,9 @@ function CheckPray(props: checkPrayProps) {
   return (
     <div
       onClick={() => props.onClick?.(props.name, props.id)}
-      className='h-10 w-10 rounded-full flex items-center justify-center bg-primary-light cursor-pointer'
+      className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'
     >
-      <IconCheck />
+      {props.date}
     </div>
   )
 }
