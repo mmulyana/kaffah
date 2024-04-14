@@ -4,10 +4,14 @@ import { useUser } from '@clerk/nextjs'
 import IconImagePlaceholder from '../icon/icon-image-placeholder'
 import Image from 'next/image'
 
-export default function Profile() {
+type ProfileProps = {
+  isDemo?: boolean
+}
+export default function Profile(props: ProfileProps) {
   const { isLoaded, user } = useUser()
 
   if (!isLoaded) return <UserLoading />
+  if (!!props.isDemo) return <UserDemo />
 
   return (
     <div className='grid grid-cols-[48px_1fr] gap-3 p-[10px] bg-white rounded-[6px]'>
@@ -37,15 +41,32 @@ export default function Profile() {
 function UserLoading() {
   return (
     <div className='flex gap-3 p-[10px] bg-white rounded-[6px] w-full'>
-      <div role='status' className='grid grid-cols-[48px_1fr] gap-3 animate-pulse w-full'>
+      <div
+        role='status'
+        className='grid grid-cols-[48px_1fr] gap-3 animate-pulse w-full'
+      >
         <div className='flex items-center justify-center h-12 w-12 bg-gray-300 rounded-[5px]'>
           <IconImagePlaceholder />
         </div>
         <div className='w-full flex flex-col items-start justify-center'>
-          <div className='h-3 bg-neutral-dark rounded w-1/3 mb-1'></div>
+          <div className='h-3 bg-neutral-light/50 rounded w-1/3 mb-1'></div>
           <div className='h-3 bg-neutral-light/50 rounded w-3/5' />
           <span className='sr-only'>Loading...</span>
         </div>
+      </div>
+    </div>
+  )
+}
+
+function UserDemo() {
+  return (
+    <div className='grid grid-cols-[48px_1fr] gap-3 p-[10px] bg-white rounded-[6px]'>
+      <div className='flex items-center justify-center h-12 w-12 bg-gray-300 rounded-[5px]'>
+        <IconImagePlaceholder />
+      </div>
+      <div className='w-full flex flex-col items-start justify-center'>
+        <p className='text-neutral-dark mb-0.5 text-base'>Guest</p>
+        <p className='text-neutral-light/50 text-sm'>example@mail.com</p>
       </div>
     </div>
   )

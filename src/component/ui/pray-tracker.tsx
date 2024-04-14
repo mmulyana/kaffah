@@ -1,6 +1,6 @@
 import IconCheck from '../icon/icon-check'
 
-type PrayTrackerProps = {
+export type PrayTrackerProps = {
   name: string
   data: {
     id: string
@@ -10,13 +10,15 @@ type PrayTrackerProps = {
   }[]
 }
 
-function PrayTracker(props: PrayTrackerProps) {
+export default function PrayTracker(props: PrayTrackerProps) {
   return (
-    <div className='w-full h-fit'>
+    <div className='w-full h-fit bg-white px-6 pt-4 pb-5 border border-[#F0F0F0] rounded-lg'>
       <p>{props.name}</p>
-      {props.data.map((item) => (
-        <PrayDate {...item} key={item.id} />
-      ))}
+      <div className='flex justify-between items-center mt-3'>
+        {props.data.map((item) => (
+          <PrayDate {...item} key={item.id} />
+        ))}
+      </div>
     </div>
   )
 }
@@ -29,7 +31,7 @@ type PrayDateProps = {
 
 function PrayDate(props: PrayDateProps) {
   return (
-    <div className='flex flex-col items-center gap-4'>
+    <div className='flex flex-col items-center gap-2'>
       <p className='m-0 text-neutral-light text-sm'>{props.day}</p>
       <CheckPray {...props} />
     </div>
@@ -44,14 +46,14 @@ type checkPrayProps = {
 function CheckPray(props: checkPrayProps) {
   if (!props.isDone) {
     return (
-      <div className='h-10 w-10 rounded-full flex items-center justify-center'>
+      <div className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'>
         {props.date}
       </div>
     )
   }
 
   return (
-    <div className='h-10 w-10 rounded-full flex items-center justify-center'>
+    <div className='h-10 w-10 rounded-full flex items-center justify-center bg-primary-light cursor-pointer'>
       <IconCheck />
     </div>
   )

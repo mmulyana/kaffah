@@ -16,33 +16,17 @@ type menu = {
   url: string
   icon: ReactNode
 }
-
-const menus: menu[] = [
-  {
-    name: 'Today',
-    url: '/today',
-    icon: <IconHome />,
-  },
-  {
-    name: 'Analytic',
-    url: '/analytic',
-    icon: <IconPieChart />,
-  },
-  {
-    name: 'Setting',
-    url: '/setting',
-    icon: <IconSetting />,
-  },
-]
-
-export default function Sidebar() {
+type SidebarProps = {
+  isDemo?: boolean
+}
+export default function Sidebar(props: SidebarProps) {
   return (
     <div className='h-screen w-[320px] fixed top-0 left-0 px-8 pt-5 hidden lg:flex flex-col'>
-      <Profile />
+      <Profile isDemo={props.isDemo} />
       <div className='flex flex-col mt-8 gap-6'>
-        <LinkItems links={menus} />
+        <LinkItems links={props.isDemo ? menusDemo : menus} />
       </div>
-      <Logout />
+      {!props.isDemo && <Logout />}
     </div>
   )
 }
@@ -105,3 +89,38 @@ function Logout() {
     </SignOutButton>
   )
 }
+
+const menus: menu[] = [
+  {
+    name: 'Today',
+    url: '/today',
+    icon: <IconHome />,
+  },
+  {
+    name: 'Analytic',
+    url: '/analytic',
+    icon: <IconPieChart />,
+  },
+  {
+    name: 'Setting',
+    url: '/setting',
+    icon: <IconSetting />,
+  },
+]
+const menusDemo: menu[] = [
+  {
+    name: 'Today',
+    url: '/demo/today',
+    icon: <IconHome />,
+  },
+  {
+    name: 'Analytic',
+    url: '/demo/analytic',
+    icon: <IconPieChart />,
+  },
+  {
+    name: 'Setting',
+    url: '/demo/setting',
+    icon: <IconSetting />,
+  },
+]
