@@ -8,7 +8,7 @@ import Profile from './profile'
 import IconHome from '../icon/icon-home'
 import IconPieChart from '../icon/icon-pie-chart'
 import IconSetting from '../icon/icon-setting'
-import { SignOutButton, UserButton } from '@clerk/nextjs'
+import { SignOutButton } from '@clerk/nextjs'
 import IconLogout from '../icon/icon-logout'
 
 type menu = {
@@ -92,8 +92,8 @@ function Logout() {
 
 const menus: menu[] = [
   {
-    name: 'Today',
-    url: '/today',
+    name: 'Weekly',
+    url: '/weekly',
     icon: <IconHome />,
   },
   {
@@ -109,8 +109,8 @@ const menus: menu[] = [
 ]
 const menusDemo: menu[] = [
   {
-    name: 'Today',
-    url: '/demo/today',
+    name: 'Weekly',
+    url: '/demo/weekly',
     icon: <IconHome />,
   },
   {
