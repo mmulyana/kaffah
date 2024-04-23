@@ -1,3 +1,18 @@
+const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
 export function getCurrentWeekNumber(): number {
   const today: Date = new Date()
   const firstDayOfYear: Date = new Date(today.getFullYear(), 0, 1)
@@ -9,7 +24,7 @@ export function getCurrentWeekNumber(): number {
   return weekNumber
 }
 
-export function getFirstDay(weekNumber: number): string {
+export function getFirstDayByWeek(weekNumber: number): string {
   const startDateOfYear = new Date(new Date().getFullYear(), 0, 1)
   const firstDayOfYear = startDateOfYear.getDay()
   const daysToAdd = (weekNumber - 1) * 7 - firstDayOfYear + 1
@@ -23,7 +38,7 @@ export function getFirstDay(weekNumber: number): string {
   return `${date} ${month}`
 }
 
-export function getLastDay(weekNumber: number): string {
+export function getLastDayByWeek(weekNumber: number): string {
   const startDateOfYear = new Date(new Date().getFullYear(), 0, 1)
   const firstDayOfYear = startDateOfYear.getDay()
   const daysToAdd = (weekNumber - 1) * 7 - firstDayOfYear + 7
@@ -66,22 +81,37 @@ export function generateWeekData(weekNumber: number) {
   })
 }
 
-const MONTHS = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-]
-
 export function getDayByDate(dateStr: string) {
   const date = new Date(dateStr)
   return date.toLocaleDateString('en-US', { weekday: 'short' })
+}
+
+export function convertToDate(dateStr: string) {
+  const date = new Date(dateStr)
+  const day = date.getDate()
+  const month = date.toLocaleString('en-US', { month: 'short' })
+
+  return `${day} ${month}`
+}
+
+export function changeWeek(
+  dateRange: { first: string; last: string },
+  direction: 'next' | 'prev'
+) {
+  const { first, last } = dateRange
+  const firstDate = new Date(first)
+  const lastDate = new Date(last)
+
+  const increment = direction === 'next' ? 7 : -7
+
+  const newFirstDate = new Date(
+    firstDate.getTime() + increment * 24 * 60 * 60 * 1000
+  )
+  const newLastDate = new Date(
+    lastDate.getTime() + increment * 24 * 60 * 60 * 1000
+  )
+  return {
+    first: newFirstDate.toISOString().split('T')[0],
+    last: newLastDate.toISOString().split('T')[0],
+  }
 }

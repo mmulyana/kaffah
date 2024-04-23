@@ -1,6 +1,5 @@
 import prisma from '@/utils/db'
 import { fillEmptyData, getWeekDates } from '@/utils/pray'
-import { getFirstDay } from '@/utils/time'
 import { NextRequest, NextResponse } from 'next/server'
 
 interface PrayLog {
