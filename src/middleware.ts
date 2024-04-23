@@ -9,6 +9,7 @@ export default authMiddleware({
     '/demo/weekly',
     '/demo/analytic',
     '/demo/setting',
+    '/api/pray/:id',
   ],
 })
 
