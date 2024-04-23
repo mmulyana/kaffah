@@ -1,7 +1,7 @@
 'use client'
 
 import Header from '@/component/ui/header'
-import PrayTracker, { PrayTrackerProps } from '@/component/ui/pray-tracker'
+import PrayTracker, { PrayTrackerProps } from '@/component/ui/pray-tracker-demo'
 import { generateWeekData, getCurrentWeekNumber } from '@/utils/time'
 import { useEffect, useState } from 'react'
 
