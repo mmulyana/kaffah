@@ -24,7 +24,7 @@ export function fillEmptyData(
     } else {
       filledData.push({
         date: currentDate.toISOString().slice(0, 10),
-        id: generateId(),
+        id: 'key-' + generateId(),
         name: name,
         isDone: false,
         userID: id,
@@ -42,7 +42,7 @@ export function getWeekDates(): { first: string; last: string } {
   const dayOfWeek = date.getDay()
 
   const firstDayOfWeek = new Date(date)
-  firstDayOfWeek.setDate(date.getDate() - dayOfWeek + 1)
+  firstDayOfWeek.setDate(date.getDate() - dayOfWeek + 2)
 
   const lastDayOfWeek = new Date(firstDayOfWeek)
   lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6)
