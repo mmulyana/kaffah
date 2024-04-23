@@ -5,18 +5,26 @@ import { auth } from '@clerk/nextjs'
 type Props = {
   params: {
     week: string
+  },
+  searchParams: {
+    s: string
+    e: string
   }
 }
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { userId } = auth()
-  const res = await fetch(`http://localhost:3000/api/pray/${userId}`, {
-    next: { tags: ['pray_log'], revalidate: 3000 },
+  let url = `http://localhost:3000/api/pray/${userId}`
+
+  if(searchParams.s && searchParams.e) url += `?s=${searchParams.s}&e=${searchParams.e}`
+
+  const res = await fetch(url, {
+    next: { tags: ['pray_log'], revalidate: 1000 },
   })
   const { data } = await res.json()
 
   return (
     <section className='pb-10'>
-      {/* <Header index={params.week} handleIndex={handleIndex} /> */}
+      <Header />
       <div className='flex flex-col gap-5 w-full h-fit'>
         {data?.map((item: any, i: number) => (
           <PrayTracker
