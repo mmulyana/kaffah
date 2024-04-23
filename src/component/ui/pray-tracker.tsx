@@ -1,29 +1,28 @@
-import { useEffect, useState } from 'react'
+import { handlePrayAction } from '@/action/pray'
 import IconCheck from '../icon/icon-check'
-
-type PrayData = {
-  id: string
-  isDone: boolean
-  date: string
-  day: string
-}
-export type PrayTrackerProps = {
+import { useAuth } from '@clerk/nextjs'
+import { getDayByDate } from '@/utils/time'
+type Props = {
   name: string
-  data: PrayData[]
-  onClick?: (...param: any) => void
+  userId: string
+  data: {
+    id: string
+    name: string
+    date: string
+    isDone: boolean
+  }[]
 }
-
-export default function PrayTracker(props: PrayTrackerProps) {
+export default function PrayTracker(props: Props) {
   return (
     <div className='w-full h-fit bg-white px-6 pt-4 pb-5 border-[1.5px] border-[#F0F0F0] rounded-lg'>
       <p className='text-neutral-dark font-medium'>{props.name}</p>
       <div className='flex justify-between items-center mt-3'>
         {props.data.map((item) => (
           <PrayDate
-            {...item}
-            onClick={props.onClick}
-            name={props.name}
             key={item.id}
+            data={item}
+            userId={props.userId}
+            name={props.name}
           />
         ))}
       </div>
@@ -31,56 +30,63 @@ export default function PrayTracker(props: PrayTrackerProps) {
   )
 }
 
-type PrayDateProps = PrayData & {
+type PrayDateProps = {
   name: string
-  onClick?: (...param: any) => void
+  userId?: string
+  data: {
+    id: string
+    name: string
+    date: string
+    isDone: boolean
+  }
 }
-
 function PrayDate(props: PrayDateProps) {
   return (
     <div className='flex flex-col items-center gap-2'>
-      <p className='m-0 text-neutral-light text-sm'>{props.day}</p>
-      <CheckPray {...props} />
+      <p className='m-0 text-neutral-light text-sm'>
+        {getDayByDate(props.data.date)}
+      </p>
+      <form action={handlePrayAction}>
+        <input
+          name='isDone'
+          defaultValue={props.data.isDone ? 'true' : 'false'}
+          hidden
+        />
+        <input name='date' defaultValue={props.data.date} hidden />
+        <input name='name' defaultValue={props.data.name} hidden />
+        <input name='userId' defaultValue={props.userId} hidden />
+        <input name='id' defaultValue={props.data.id} hidden />
+        <CheckPrayItem
+          isDone={props.data.isDone}
+          date={props.data.date.slice(8, 10)}
+        />
+      </form>
     </div>
   )
 }
 
-type checkPrayProps = Omit<PrayData, 'day'> & {
-  name: string
-  onClick?: (...param: any) => void
+type CheckPrayItemProps = {
+  isDone: boolean
+  date: string
 }
-
-function CheckPray(props: checkPrayProps) {
-  const [isClient, setIsClient] = useState(false)
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  if (!!isClient) return <CheckPrayItem {...props} />
-
-  return (
-    <div className='h-10 w-10 rounded-full flex items-center justify-center bg-neutral-light animate-pulse'></div>
-  )
-}
-
-function CheckPrayItem(props: checkPrayProps) {
+function CheckPrayItem(props: CheckPrayItemProps) {
   if (!!props.isDone) {
     return (
-      <div
-        onClick={() => props.onClick?.(props.name, props.id)}
+      <button
+        type='submit'
         className='h-10 w-10 rounded-full flex items-center justify-center bg-primary-light cursor-pointer'
       >
         <IconCheck />
-      </div>
+      </button>
     )
   }
 
   return (
-    <div
-      onClick={() => props.onClick?.(props.name, props.id)}
+    <button
+      type='submit'
       className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'
     >
       {props.date}
-    </div>
+    </button>
   )
 }
