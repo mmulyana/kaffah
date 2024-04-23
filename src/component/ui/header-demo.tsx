@@ -1,16 +1,20 @@
 'use client'
 
-import { getWeekDates } from '@/utils/pray'
+import { useState } from 'react'
 import IconCalendar from '../icon/icon-calendar'
 import IconChevron from '../icon/icon-chevron'
 import Button from './button'
-import { changeWeek, convertToDate } from '@/utils/time'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { getCurrentWeekNumber, getLastDayByWeek } from '@/utils/time'
+import { getFirstDayByWeek } from '../../utils/time'
 
-export default function Header() {
-  const [data, setData] = useState(getWeekDates())
-  const router = useRouter()
+const currentWeekNumber = getCurrentWeekNumber()
+
+type Props = {
+  index: number
+  handleIndex: (...param: any) => void
+}
+export default function Header(props: Props) {
+  const [weekNumber, setWeekNumber] = useState(currentWeekNumber)
 
   return (
     <div className='w-full h-fit flex justify-between items-center mb-6'>
@@ -22,17 +26,17 @@ export default function Header() {
         <div className='h-10 px-4 bg-white shadow-[0_1.5px_0px_0px_rgba(217,217,217,1)] flex items-center rounded-full gap-2'>
           <IconCalendar height='20' width='20' />
           <div className='flex gap-2 items-center'>
-            <p className='text-sm'>{convertToDate(data.first)}</p>
+            <p className='text-sm'>
+              {getFirstDayByWeek(weekNumber - props.index)}
+            </p>
             <div className='w-2 h-0.5 bg-neutral-light/50 rounded' />
-            <p className='text-sm'>{convertToDate(data.last)}</p>
+            <p className='text-sm'>
+              {getLastDayByWeek(weekNumber - props.index)}
+            </p>
           </div>
         </div>
         <Button
-          onClick={() => {
-            const newData = changeWeek(data, 'prev')
-            setData(newData)
-            router.push(`?s=${newData.first}&e=${newData.last}`)
-          }}
+          onClick={() => props.handleIndex('INC')}
           className='h-10 w-10 rounded-full flex items-center justify-center bg-white shadow-[0_1.5px_0px_0px_rgba(217,217,217,1)] hover:shadow-[0_4px_4px_0px_rgba(217,217,217,1)] duration-75 ease-in'
         >
           <span className='rotate-90'>
@@ -40,11 +44,7 @@ export default function Header() {
           </span>
         </Button>
         <Button
-          onClick={() => {
-            const newData = changeWeek(data, 'next')
-            setData(newData)
-            router.push(`?s=${newData.first}&e=${newData.last}`)
-          }}
+          onClick={() => props.handleIndex('DEC')}
           className='h-10 w-10 rounded-full flex items-center justify-center bg-white shadow-[0_1.5px_0px_0px_rgba(217,217,217,1)] hover:shadow-[0_4px_4px_0px_rgba(217,217,217,1)] duration-75 ease-in'
         >
           <span className='-rotate-90'>
