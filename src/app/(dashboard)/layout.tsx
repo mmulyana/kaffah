@@ -4,8 +4,8 @@ export default function Layout({ children }: React.PropsWithChildren) {
   return (
     <>
       <Sidebar />
-      <div className='ml-[360px] px-4'>
-        <div className='pt-5'>{children}</div>
+      <div className='px-4'>
+        <div className='pt-5 max-w-[560px] mx-auto'>{children}</div>
       </div>
     </>
   )
