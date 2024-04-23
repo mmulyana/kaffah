@@ -1,6 +1,5 @@
-import { handlePrayAction } from '@/action/pray'
+import { PrayAction } from '@/action/pray'
 import IconCheck from '../icon/icon-check'
-import { useAuth } from '@clerk/nextjs'
 import { getDayByDate } from '@/utils/time'
 type Props = {
   name: string
@@ -46,7 +45,7 @@ function PrayDate(props: PrayDateProps) {
       <p className='m-0 text-neutral-light text-sm'>
         {getDayByDate(props.data.date)}
       </p>
-      <form action={handlePrayAction}>
+      <form action={PrayAction}>
         <input
           name='isDone'
           defaultValue={props.data.isDone ? 'true' : 'false'}
