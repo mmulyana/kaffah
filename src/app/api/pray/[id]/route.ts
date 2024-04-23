@@ -64,3 +64,28 @@ export async function GET(
     return NextResponse.json({ mesage: error }, { status: 500 })
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const data = await prisma.pray_log.delete({
+      where: {
+        id: parseInt(params.id),
+      },
+    })
+    return NextResponse.json(
+      {
+        data,
+        message: 'success',
+      },
+      {
+        status: 200,
+      }
+    )
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json({ message: error }, { status: 500 })
+  }
+}
