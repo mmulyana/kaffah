@@ -39,7 +39,7 @@ function LinkItems(props: LinkItemsProps) {
   const pathname = usePathname()
 
   return props.links.map((link) => (
-    <LinkItem key={link.name} isActive={pathname == link.url} {...link} />
+    <LinkItem key={link.name} isActive={pathname.includes(link.url)} {...link} />
   ))
 }
 
