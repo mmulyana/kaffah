@@ -83,7 +83,7 @@ function CheckPrayItem(props: CheckPrayItemProps) {
   return (
     <button
       type='submit'
-      className='h-10 w-10 rounded-full flex items-center justify-center hover:bg-neutral-light/10 cursor-pointer'
+      className='h-10 w-10 rounded-full flex items-center justify-center bg-neutral-light/[0.05] hover:bg-neutral-light/20 cursor-pointer'
     >
       {props.date}
     </button>
