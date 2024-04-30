@@ -1,12 +1,11 @@
 'use client'
-
-import { getWeekDates } from '@/utils/pray'
-import IconCalendar from '../icon/icon-calendar'
-import IconChevron from '../icon/icon-chevron'
-import Button from './button'
-import { changeWeek, convertToDate } from '@/utils/time'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import Button from './button'
+
+import { changeWeek, convertToDate, getWeekDates } from '@/utils/time'
+import IconChevron from '../icon/icon-chevron'
+import IconCalendar from '../icon/icon-calendar'
 
 export default function Header() {
   const [data, setData] = useState(getWeekDates())
