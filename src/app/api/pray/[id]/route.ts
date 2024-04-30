@@ -1,14 +1,8 @@
 import prisma from '@/utils/db'
-import { fillEmptyData, getWeekDates } from '@/utils/pray'
+import { fillEmptyData } from '@/utils/pray'
+import { getWeekDates } from '@/utils/time'
 import { NextRequest, NextResponse } from 'next/server'
 
-interface PrayLog {
-  id: number
-  name: string
-  date: string
-  isDone: boolean
-  userID: string
-}
 
 export async function GET(
   request: NextRequest,
