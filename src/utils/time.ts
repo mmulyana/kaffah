@@ -94,6 +94,15 @@ export function convertToDate(dateStr: string) {
   return `${day} ${month}`
 }
 
+export function convertToDay(dateStr: string) {
+  const date = new Date(dateStr)
+  const day = date.getDate()
+  const month = date.toLocaleString('en-US', { month: 'short' })
+  const dayName = date.toLocaleString('en-US', { weekday: 'short' })
+
+  return `${dayName}, ${day} ${month}`
+}
+
 export function changeWeek(
   dateRange: { first: string; last: string },
   direction: 'next' | 'prev'
@@ -114,4 +123,50 @@ export function changeWeek(
     first: newFirstDate.toISOString().split('T')[0],
     last: newLastDate.toISOString().split('T')[0],
   }
+}
+
+export function getWeekDates(): { first: string; last: string } {
+  const date = new Date()
+  const dayOfWeek = date.getDay()
+
+  const firstDayOfWeek = new Date(date)
+  firstDayOfWeek.setDate(date.getDate() - dayOfWeek + 2)
+
+  const lastDayOfWeek = new Date(firstDayOfWeek)
+  lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6)
+
+  const firstDate = new Date(
+    firstDayOfWeek.getFullYear(),
+    firstDayOfWeek.getMonth(),
+    firstDayOfWeek.getDate()
+  )
+  const lastDate = new Date(
+    lastDayOfWeek.getFullYear(),
+    lastDayOfWeek.getMonth(),
+    lastDayOfWeek.getDate()
+  )
+
+  return {
+    first: firstDate.toISOString().slice(0, 10),
+    last: lastDate.toISOString().slice(0, 10),
+  }
+}
+
+export function generateWeekDates(
+  startDate: string,
+  endDate: string
+): string[] {
+  const startDateObj: Date = new Date(startDate)
+  const endDateObj: Date = new Date(endDate)
+
+  const weekDates: string[] = []
+
+  let currentDate: Date = startDateObj
+  while (currentDate <= endDateObj) {
+    const formattedDate: string = currentDate.toISOString().split('T')[0]
+    weekDates.push(formattedDate)
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+
+  return weekDates
 }

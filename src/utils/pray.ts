@@ -1,3 +1,5 @@
+export const PRAY_NAMES = ['fajr', 'dhuhr', 'asr', 'magrib', 'isha']
+
 export function generateId(): number {
   return Math.floor(Math.random() * 1000)
 }
@@ -37,29 +39,22 @@ export function fillEmptyData(
   return filledData
 }
 
-export function getWeekDates(): { first: string; last: string } {
-  const date = new Date()
-  const dayOfWeek = date.getDay()
+export function fillEmptyPrayData(data: any[], date: string, id: string) {
+  let newData: any = []
+  PRAY_NAMES.forEach((name) => {
+    const existingPrayer = data.find((pray) => pray.name === name)
+    if (!existingPrayer) {
+      newData.push({
+        id: 'key-' + generateId(),
+        name: name,
+        date: date,
+        isDone: false,
+        userID: id,
+      })
+    }
+  })
 
-  const firstDayOfWeek = new Date(date)
-  firstDayOfWeek.setDate(date.getDate() - dayOfWeek + 2)
+  let result: any[] = [...data, ...newData]
 
-  const lastDayOfWeek = new Date(firstDayOfWeek)
-  lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6)
-
-  const firstDate = new Date(
-    firstDayOfWeek.getFullYear(),
-    firstDayOfWeek.getMonth(),
-    firstDayOfWeek.getDate()
-  )
-  const lastDate = new Date(
-    lastDayOfWeek.getFullYear(),
-    lastDayOfWeek.getMonth(),
-    lastDayOfWeek.getDate()
-  )
-
-  return {
-    first: firstDate.toISOString().slice(0, 10),
-    last: lastDate.toISOString().slice(0, 10),
-  }
+  return result
 }
